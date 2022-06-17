@@ -22,4 +22,5 @@ Currently in the latest version of the Minecraft Launcher your forced to sign in
 
 ### READ!!
 The latest version that works is 1.18.2, 1.19 does NOT work.
+
 Also in edit profile set you JVM Args to this -Xmx2G -Xmn256M
