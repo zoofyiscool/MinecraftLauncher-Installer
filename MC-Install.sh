@@ -8,23 +8,28 @@ launcherDownInstall(){
         exit 1
     fi
 
+    # Downloads the .desktop file
     wget https://raw.githubusercontent.com/zoofyiscool/MinecraftLauncher-Installer/main/desktopFileTemplate -q
 
     if [[ -d "$mcPath" ]]; then
         echo "Downloading launcher file!"
-        wget https://launcher.mojang.com/v1/objects/eabbff5ff8e21250e33670924a0c5e38f47c840b/launcher.jar -O /tmp/launcher.jar -q
-        mv /tmp/launcher.jar "$mcPath"
+        # Downloads launcher.jar to install dir
+        wget https://launcher.mojang.com/v1/objects/eabbff5ff8e21250e33670924a0c5e38f47c840b/launcher.jar -O "$mcPath" -q
+        # Echos install location to .desktop file.
         echo "Exec=java -jar ${mcPath}launcher.jar" >> desktopFileTemplate
-    else
+    else # Error handling
         echo "Directory does not exist!"
         exit 1
-    fi
+    f
+
+    # If .minecraft directory exists, delete it.
 
     if [[ -d "~/.minecraft" ]]; then
         echo "Removed .minecraft folder."
-        rm -rf "~/.minecraft" # Remove .minecraft folder
+        rm -rf "~/.minecraft"
     fi
 
+    # Copy .desktop file to the local applications folder, and delete the template that was downloaded.
     cp desktopFileTemplate ~/.local/share/applications/minecraft-old.desktop
     echo "Cleaning.."
     rm desktopFileTemplate
@@ -40,7 +45,7 @@ echo "(y/n) Continue? (this script will attempt to delete the .minecraft folder 
 read confirm
 
 if [[ $confirm = "y" ]]; then
-    launcherDownInstall
+    launcherDownInstall # Call the function
 else
     echo "Exiting"
     exit 1
