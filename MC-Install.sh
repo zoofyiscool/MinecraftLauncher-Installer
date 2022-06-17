@@ -3,7 +3,7 @@
 launcherDownInstall(){
     echo "Where do you want the minecraft launcher to be stored? (provide full path, ex: ~/minecraft_launcher/ TRAILING SLASH!!)"
     read mcPath
-    if [[ ! "$mcPath" = */ ]]; then
+    if [[ ! $mcPath = */ ]]; then
         echo "Please include a trailing slash!"
         exit 1
     fi
@@ -11,14 +11,19 @@ launcherDownInstall(){
     # Downloads the .desktop file
     wget https://raw.githubusercontent.com/zoofyiscool/MinecraftLauncher-Installer/main/desktopFileTemplate -q
 
-    if [[ -d "$mcPath" ]]; then
+    if [[ ! -d ~/.local/share/applications/ ]]; then
+        # This directory might not exist, if it doesn't, create it.
+        mkdir -p ~/.local/share/applications/
+    fi
+
+    if [[ -d $mcPath ]]; then
         echo "Downloading launcher file!"
         # Downloads launcher.jar to install dir
-        wget https://launcher.mojang.com/v1/objects/eabbff5ff8e21250e33670924a0c5e38f47c840b/launcher.jar -O "$mcPath" -q
+        wget https://launcher.mojang.com/v1/objects/eabbff5ff8e21250e33670924a0c5e38f47c840b/launcher.jar -O ${mcPath}/launcher.jar -q
         # Echos install location to .desktop file.
         echo "Exec=java -jar ${mcPath}launcher.jar" >> desktopFileTemplate
     else # Error handling
-        echo "Directory does not exist!"
+        echo "Directory does not exist!, or your directory has spaces in it."
         exit 1
     fi
 
