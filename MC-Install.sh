@@ -20,7 +20,7 @@ launcherDownInstall(){
     else # Error handling
         echo "Directory does not exist!"
         exit 1
-    f
+    fi
 
     # If .minecraft directory exists, delete it.
 
